@@ -1,4 +1,4 @@
-<!-- Improved version after marcos helped me with arrays -->
+<!-- Improved version after some help with arrays -->
 <html>
 <head>
 	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
@@ -12,8 +12,6 @@
 		body {font-family: 'Icons', 'Roboto', sans-serif;background-color: aliceblue;}
 		.note {
 			display: inline-block;
-			/*height:1em;
-			width:1em;*/
 			height:12px;
 			width:12px;
 			position: relative;
@@ -29,8 +27,6 @@
 		.string-5,
 		.string-6 {
 			height:18px;
-/*			padding: 3px 0 3px 0px;
-			margin:1px 0 1px 0;	*/
 			padding: 0 0 0 0;
 			margin:0 0 0 0;
 			background-image: url("cuerda.png");
@@ -38,17 +34,9 @@
 			background-position: 1px 8px;
 			background-size: 595px;
 		}
-/*
-		.string-1 {
-			border-top: 1px solid #bababa;
-		}
-		.string-6 {
-			border-bottom: 1px solid #bababa;
-		}
-*/
+
 	/* OPEN STRINGS */
 		.open {
-/*			margin-right:10px;*/
 			margin-right:16px;
 		}
 
@@ -124,7 +112,7 @@
 				Scaletor v3.0
 		</h2>	
 	</div>
-	<div class="form-group col-md-6"><!-- col-md-12 col-sm-12 col-xs-12 -->
+	<div class="form-group col-md-6">
 
 		<div class="col-md-12" style="margin-bottom:15px;">
 			<div class="row">
@@ -176,8 +164,6 @@
 				<div class="col-md-2 inline">
 					<button id="actionButton" class="btn btn-primary">Select</button>
 				</div>
-					<!--<span id="actionContainer"></span>
-					<p></p>-->
 			</div>
 		</div>
 		<div id="diapason" class="col-md-12">
@@ -394,258 +380,6 @@
 			</div>
 		</div>
 	</div>
-
-<!-- 
-	<div class="form-group col-md-6">
-
-		<div class="col-md-12" style="margin-bottom:15px;">
-			<div class="row">
-				<div class="inline">
-					<h3 class="inline">
-						<span id="root-name2"></span>
-						<span id="scale-name2">Please Select a Scale</span>
-					</h3>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4 inline">
-					<select id="rootSelector2" class="form-control">
-						<option value="" >Select note</option>
-					  	<option value="a">A</option>
-					  	<option value="as">A#</option>
-						<option value="b">B</option>
-					  	<option value="c">C</option>
-					    <option value="cs">C#</option>
-					  	<option value="d">D</option>
-					    <option value="ds">D#</option>
-					  	<option value="e">E</option>
-					    <option value="f">F</option>
-					  	<option value="fs">F#</option>
-					    <option value="g">G</option>
-					  	<option value="gs">G#</option>
-					</select>
-				</div>
-				<div class="col-md-6 inline">
-					<select id="scaleSelector2" class="form-control">
-						<option value="">Select scale</option>
-					  	<option value="major-scale">Major scale</option>
-					  	<option value="minor-scale">Minor scale</option>
-						<option value="minor-harmonic-scale">Harmonic minor scale</option>
-					  	<option value="minor-melodic-scale">Melodic minor scale</option>
-					    <option value="minor-dorian-scale">Dorian Minor scale</option>
-					  	<option value="minor-blues-scale">Blues Minor scale</option>
-					    <option value="major-blues-scale">Blues Major scale</option>
-					  	<option value="mixolydian-scale">Mixolydian scale</option>
-					  	<option value="mixolydian-b13-scale">Mixolydian b13 scale</option>
-						<option value="mixolydian-b9-b13-scale">Mixolydian b9 b13 scale</option>
-					    <option value="lydian-scale">Lydian scale</option>
-					  	<option value="phrygian-scale">Phrygian scale</option>
-					    <option value="augmented-scale">Augmented scale</option>
-					  	<option value="diminished-scale-whole-half">Diminished scale(whole/half)</option>
-					  	<option value="diminished-scale-half-whole">Diminished scale(half/whole)</option>
-					</select>
-				</div>
-				<div class="col-md-2 inline">
-					<button id="actionButton2" class="btn btn-primary">Select</button>
-				</div>
-					
-			</div>
-		</div>
-		<div id="diapason2" class="col-md-12">
-			<div class="guides2">
-				<span class"fret3">III</span>
-				<span>V</span>
-				<span>VII</span>
-				<span>IX</span>
-				<span>XII</span>
-				<span>XV</span>
-				<span>XVII</span>
-				<span>XIX</span>
-				<span>XXI</span>
-				<span>XXIV</span>
-			</div>
-			<div class="string-1">
-				<div class="open note e"><div class="fret1"></div></div>
-				<div class="note f"><div class="frets"></div></div>
-				<div class="note fs"><div class="frets"></div></div>
-				<div class="note g"><div class="frets"></div></div>
-				<div class="note gs"><div class="frets"></div></div>
-				<div class="note a"><div class="frets"></div></div>
-				<div class="note as"><div class="frets"></div></div>
-				<div class="note b"><div class="frets"></div></div>
-				<div class="note c"><div class="frets"></div></div>
-				<div class="note cs"><div class="frets"></div></div>
-				<div class="note d"><div class="frets"></div></div>
-				<div class="note ds"><div class="frets"></div></div>
-				<div class="note e oct"><div class="frets"></div></div>
-				<div class="note f oct"><div class="frets"></div></div>
-				<div class="note fs oct"><div class="frets"></div></div>
-				<div class="note g oct"><div class="frets"></div></div>
-				<div class="note gs oct"><div class="frets"></div></div>
-				<div class="note a oct"><div class="frets"></div></div>
-				<div class="note as oct"><div class="frets"></div></div>
-				<div class="note b oct"><div class="frets"></div></div>
-				<div class="note c oct"><div class="frets"></div></div>
-				<div class="note cs oct"><div class="frets"></div></div>
-				<div class="note d oct"><div class="frets"></div></div>
-				<div class="note ds oct"><div class="frets"></div></div>
-				<div class="note e oct"><div class="frets"></div></div>
-			</div>
-
-			<div class="string-2">
-				<div class="open note b"><div class="fret1"></div></div>
-				<div class="note c"><div class="frets"></div></div>
-				<div class="note cs"><div class="frets"></div></div>
-				<div class="note d"><div class="frets"></div></div>
-				<div class="note ds"><div class="frets"></div></div>
-				<div class="note e"><div class="frets"></div></div>
-				<div class="note f"><div class="frets"></div></div>
-				<div class="note fs"><div class="frets"></div></div>
-				<div class="note g"><div class="frets"></div></div>
-				<div class="note gs"><div class="frets"></div></div>
-				<div class="note a"><div class="frets"></div></div>
-				<div class="note as"><div class="frets"></div></div>
-				<div class="note b oct"><div class="frets"></div></div>
-				<div class="note c oct"><div class="frets"></div></div>
-				<div class="note cs oct"><div class="frets"></div></div>
-				<div class="note d oct"><div class="frets"></div></div>
-				<div class="note ds oct"><div class="frets"></div></div>
-				<div class="note e oct"><div class="frets"></div></div>
-				<div class="note f oct"><div class="frets"></div></div>
-				<div class="note fs oct"><div class="frets"></div></div>
-				<div class="note g oct"><div class="frets"></div></div>
-				<div class="note gs oct"><div class="frets"></div></div>
-				<div class="note a oct"><div class="frets"></div></div>
-				<div class="note as oct"><div class="frets"></div></div>
-				<div class="note b oct"><div class="frets"></div></div>
-			</div>
-
-			<div  class="string-3">
-				<div class="open note g"><div class="fret1"></div></div>
-				<div class="note gs"><div class="frets"></div></div>
-				<div class="note a"><div class="frets"></div></div>
-				<div class="note as"><div class="frets"></div></div>
-				<div class="note b"><div class="frets"></div></div>
-				<div class="note c"><div class="frets"></div></div>
-				<div class="note cs"><div class="frets"></div></div>
-				<div class="note d"><div class="frets"></div></div>
-				<div class="note ds"><div class="frets"></div></div>
-				<div class="note e"><div class="frets"></div></div>
-				<div class="note f"><div class="frets"></div></div>
-				<div class="note fs"><div class="frets"></div></div>
-				<div class="note g oct"><div class="frets"></div></div>
-				<div class="note gs oct"><div class="frets"></div></div>
-				<div class="note a oct"><div class="frets"></div></div>
-				<div class="note as oct"><div class="frets"></div></div>
-				<div class="note b oct"><div class="frets"></div></div>
-				<div class="note c oct"><div class="frets"></div></div>
-				<div class="note cs oct"><div class="frets"></div></div>
-				<div class="note d oct"><div class="frets"></div></div>
-				<div class="note ds oct"><div class="frets"></div></div>
-				<div class="note e oct"><div class="frets"></div></div>
-				<div class="note f oct"><div class="frets"></div></div>
-				<div class="note fs oct"><div class="frets"></div></div>
-				<div class="note g oct"><div class="frets"></div></div>
-			</div>
-
-			<div  class="string-4">
-				<div class="open note d"><div class="fret1"></div></div>
-				<div class="note ds"><div class="frets"></div></div>
-				<div class="note e"><div class="frets"></div></div>
-				<div class="note f"><div class="frets"></div></div>
-				<div class="note fs"><div class="frets"></div></div>
-				<div class="note g"><div class="frets"></div></div>
-				<div class="note gs"><div class="frets"></div></div>
-				<div class="note a"><div class="frets"></div></div>
-				<div class="note as"><div class="frets"></div></div>
-				<div class="note b"><div class="frets"></div></div>
-				<div class="note c"><div class="frets"></div></div>
-				<div class="note cs"><div class="frets"></div></div>
-				<div class="note d oct"><div class="frets"></div></div>
-				<div class="note ds oct"><div class="frets"></div></div>
-				<div class="note e oct"><div class="frets"></div></div>
-				<div class="note f oct"><div class="frets"></div></div>
-				<div class="note fs oct"><div class="frets"></div></div>
-				<div class="note g oct"><div class="frets"></div></div>
-				<div class="note gs oct"><div class="frets"></div></div>
-				<div class="note a oct"><div class="frets"></div></div>
-				<div class="note as oct"><div class="frets"></div></div>
-				<div class="note b oct"><div class="frets"></div></div>
-				<div class="note c oct"><div class="frets"></div></div>
-				<div class="note cs oct"><div class="frets"></div></div>
-				<div class="note d oct"><div class="frets"></div></div>
-			</div>
-
-			<div  class="string-5">
-				<div class="open note a"><div class="fret1"></div></div>
-				<div class="note as"><div class="frets"></div></div>
-				<div class="note b"><div class="frets"></div></div>
-				<div class="note c"><div class="frets"></div></div>
-				<div class="note cs"><div class="frets"></div></div>
-				<div class="note d"><div class="frets"></div></div>
-				<div class="note ds"><div class="frets"></div></div>
-				<div class="note e"><div class="frets"></div></div>
-				<div class="note f"><div class="frets"></div></div>
-				<div class="note fs"><div class="frets"></div></div>
-				<div class="note g"><div class="frets"></div></div>
-				<div class="note gs"><div class="frets"></div></div>
-				<div class="note a oct"><div class="frets"></div></div>
-				<div class="note as oct"><div class="frets"></div></div>
-				<div class="note b oct"><div class="frets"></div></div>
-				<div class="note c oct"><div class="frets"></div></div>
-				<div class="note cs oct"><div class="frets"></div></div>
-				<div class="note d oct"><div class="frets"></div></div>
-				<div class="note ds oct"><div class="frets"></div></div>
-				<div class="note e oct"><div class="frets"></div></div>
-				<div class="note f oct"><div class="frets"></div></div>
-				<div class="note fs oct"><div class="frets"></div></div>
-				<div class="note g oct"><div class="frets"></div></div>
-				<div class="note gs oct"><div class="frets"></div></div>
-				<div class="note a oct"><div class="frets"></div></div>
-			</div>
-
-			<div  class="string-6">
-				<div class="open note e"><div class="fret1"></div></div>
-				<div class="note f"><div class="frets"></div></div>
-				<div class="note fs"><div class="frets"></div></div>
-				<div class="note g"><div class="frets"></div></div>
-				<div class="note gs"><div class="frets"></div></div>
-				<div class="note a"><div class="frets"></div></div>
-				<div class="note as"><div class="frets"></div></div>
-				<div class="note b"><div class="frets"></div></div>
-				<div class="note c"><div class="frets"></div></div>
-				<div class="note cs"><div class="frets"></div></div>
-				<div class="note d"><div class="frets"></div></div>
-				<div class="note ds"><div class="frets"></div></div>
-				<div class="note e oct"><div class="frets"></div></div>
-				<div class="note f oct"><div class="frets"></div></div>
-				<div class="note fs oct"><div class="frets"></div></div>
-				<div class="note g oct"><div class="frets"></div></div>
-				<div class="note gs oct"><div class="frets"></div></div>
-				<div class="note a oct"><div class="frets"></div></div>
-				<div class="note as oct"><div class="frets"></div></div>
-				<div class="note b oct"><div class="frets"></div></div>
-				<div class="note c oct"><div class="frets"></div></div>
-				<div class="note cs oct"><div class="frets"></div></div>
-				<div class="note d oct"><div class="frets"></div></div>
-				<div class="note ds oct"><div class="frets"></div></div>
-				<div class="note e oct"><div class="frets"></div></div>
-			</div>
-			<div class="guides2">
-				<span class"fret3">III</span>
-				<span>V</span>
-				<span>VII</span>
-				<span>IX</span>
-				<span>XII</span>
-				<span>XV</span>
-				<span>XVII</span>
-				<span>XIX</span>
-				<span>XXI</span>
-				<span>XXIV</span>
-			</div>
-		</div>
-	</div>
--->
 </div>
 
 <script type="text/javascript">
