@@ -1,0 +1,945 @@
+<!-- Improved version after marcos helped me with arrays -->
+<html>
+<head>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+	<link rel="shortcut icon" type="image/png" href="favicon-16x16.png"/>
+
+<!-- Latest compiled and minified CSS    &   Latest compiled and minified JavaScript  
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
+
+	<style>
+		body {font-family: 'Icons', 'Roboto', sans-serif;background-color: aliceblue;}
+		.note {
+			display: inline-block;
+			/*height:1em;
+			width:1em;*/
+			height:12px;
+			width:12px;
+			position: relative;
+		    right: 30px;
+		    border-radius: 10px;
+			margin: 0 4px 0 4px;
+		}
+
+		.string-1,
+		.string-2,
+		.string-3,
+		.string-4,
+		.string-5,
+		.string-6 {
+			height:18px;
+/*			padding: 3px 0 3px 0px;
+			margin:1px 0 1px 0;	*/
+			padding: 0 0 0 0;
+			margin:0 0 0 0;
+			background-image: url("cuerda.png");
+			background-repeat: no-repeat;
+			background-position: 1px 8px;
+			background-size: 595px;
+		}
+/*
+		.string-1 {
+			border-top: 1px solid #bababa;
+		}
+		.string-6 {
+			border-bottom: 1px solid #bababa;
+		}
+*/
+	/* OPEN STRINGS */
+		.open {
+/*			margin-right:10px;*/
+			margin-right:16px;
+		}
+
+	/* separates open strings from the rest */
+		#diapason {
+		    position: relative;
+		    right: -30px;
+		    padding: 0;
+		    z-index: -1;
+		    height:120px;
+		    display: block;
+		    width: 624px;
+		    background-color: antiquewhite;
+		    background-color: palegoldenrod;
+		    background-color: navajowhite;
+		    background-color: moccasin;
+		    background-color: burlywood;
+		    background-color: cornsilk;
+		    background-color: lemonchiffon;
+		    background-color: lightgoldenrodyellow;
+			background-color: lightyellow;
+		} 
+	/* FRETS */
+		.fret1 {
+		    border-right: 2px solid black;
+		    height: 16px;
+		    width: 15px;
+		    position: relative;
+		    top: -7px;
+		    padding: 10px 12px 2px 0px;
+		}
+		.frets {
+		    height: 1em;
+		    width: 1em;
+		    position: relative;
+		    border-right: 1px solid grey;
+		    top: -7px;
+		    padding: 10px 2px 2px 0px;
+		}
+		.guides {font-size: 9px;background-color: aliceblue;}
+		.guides span:nth-child(1) {margin:0 0 0 62px; }/*3*/
+		.guides span:nth-child(2) {margin:0 0 0 42px; }/*5*/
+		.guides span:nth-child(3) {margin:0 0 0 42px; }/*7*/
+		.guides span:nth-child(4) {margin:0 0 0 42px; }/*9*/
+		.guides span:nth-child(5) {margin:0 0 0 62px; }/*12*/
+		.guides span:nth-child(6) {margin:0 0 0 60px; }/*15*/
+		.guides span:nth-child(7) {margin:0 0 0 38px; }/*17*/
+		.guides span:nth-child(8) {margin:0 0 0 34px; }/*19*/
+		.guides span:nth-child(9) {margin:0 0 0 38px; }/*21*/
+		.guides span:nth-child(10) {margin:0 0 0 61px; }/*24*/	
+
+		.guides2 {font-size: 9px;background-color: aliceblue;color:grey;}
+		.guides2 span:nth-child(1) {margin:0 0 0 62px; }/*3*/
+		.guides2 span:nth-child(2) {margin:0 0 0 39px; }/*5*/
+		.guides2 span:nth-child(3) {margin:0 0 0 39px; }/*7*/
+		.guides2 span:nth-child(4) {margin:0 0 0 36px; }/*9*/
+		.guides2 span:nth-child(5) {margin:0 0 0 61px; }/*12*/
+		.guides2 span:nth-child(6) {margin:0 0 0 59px; }/*15*/
+		.guides2 span:nth-child(7) {margin:0 0 0 32px; }/*17*/
+		.guides2 span:nth-child(8) {margin:0 0 0 31px; }/*19*/
+		.guides2 span:nth-child(9) {margin:0 0 0 33px; }/*21*/
+		.guides2 span:nth-child(10) {margin:0 0 0 53px; }/*24*/	
+	
+		.colored {background-color: grey;}	
+		.root {background-color: red;}
+		.inline {display: inline;}
+	</style>
+</head>
+<body>
+	<div class="inline col-md-12">
+		<h2>
+			<img src="Skeletor-head.png" title="go away with he-man" style="height:32px;width:32px;margin: 0px -2px -8px 0" />
+				Scaletor v3.0
+		</h2>	
+	</div>
+	<div class="form-group col-md-6"><!-- col-md-12 col-sm-12 col-xs-12 -->
+
+		<div class="col-md-12" style="margin-bottom:15px;">
+			<div class="row">
+				<div class="inline">
+					<h3 class="inline">
+						<span id="root-name"></span>
+						<span id="scale-name">Please Select a Scale</span>
+					</h3>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 inline">
+					<select id="rootSelector" class="form-control">
+						<option value="" >Select note</option>
+					  	<option value="a">A</option>
+					  	<option value="as">A#</option>
+						<option value="b">B</option>
+					  	<option value="c">C</option>
+					    <option value="cs">C#</option>
+					  	<option value="d">D</option>
+					    <option value="ds">D#</option>
+					  	<option value="e">E</option>
+					    <option value="f">F</option>
+					  	<option value="fs">F#</option>
+					    <option value="g">G</option>
+					  	<option value="gs">G#</option>
+					</select>
+				</div>
+				<div class="col-md-6 inline">
+					<select id="scaleSelector" class="form-control">
+						<option value="">Select scale</option>
+					  	<option value="major-scale">Major scale</option>
+					  	<option value="minor-scale">Minor scale</option>
+						<option value="minor-harmonic-scale">Harmonic minor scale</option>
+					  	<option value="minor-melodic-scale">Melodic minor scale</option>
+					    <option value="minor-dorian-scale">Dorian Minor scale</option>
+					  	<option value="minor-blues-scale">Blues Minor scale</option>
+					    <option value="major-blues-scale">Blues Major scale</option>
+					  	<option value="mixolydian-scale">Mixolydian scale</option>
+					  	<option value="mixolydian-b13-scale">Mixolydian b13 scale</option>
+						<option value="mixolydian-b9-b13-scale">Mixolydian b9 b13 scale</option>
+					    <option value="lydian-scale">Lydian scale</option>
+					  	<option value="phrygian-scale">Phrygian scale</option>
+					    <option value="augmented-scale">Augmented scale</option>
+					  	<option value="diminished-scale-whole-half">Diminished scale(whole/half)</option>
+					  	<option value="diminished-scale-half-whole">Diminished scale(half/whole)</option>
+					</select>
+				</div>
+				<div class="col-md-2 inline">
+					<button id="actionButton" class="btn btn-primary">Select</button>
+				</div>
+					<!--<span id="actionContainer"></span>
+					<p></p>-->
+			</div>
+		</div>
+		<div id="diapason" class="col-md-12">
+			<div class="guides">
+				<span class"fret3">3</span>
+				<span>5</span>
+				<span>7</span>
+				<span>9</span>
+				<span>12</span>
+				<span>15</span>
+				<span>17</span>
+				<span>19</span>
+				<span>21</span>
+				<span>24</span>
+<!--				<span class"fret3">III</span>
+				<span>V</span>
+				<span>VII</span>
+				<span>IX</span>
+				<span>XII</span>
+				<span>XV</span>
+				<span>XVII</span>
+				<span>XIX</span>
+				<span>XXI</span>
+				<span>XXIV</span>-->
+			</div>
+			<div class="string-1">
+				<div class="open note e"><div class="fret1"></div></div>
+				<div class="note f"><div class="frets"></div></div>
+				<div class="note fs"><div class="frets"></div></div>
+				<div class="note g"><div class="frets"></div></div>
+				<div class="note gs"><div class="frets"></div></div>
+				<div class="note a"><div class="frets"></div></div>
+				<div class="note as"><div class="frets"></div></div>
+				<div class="note b"><div class="frets"></div></div>
+				<div class="note c"><div class="frets"></div></div>
+				<div class="note cs"><div class="frets"></div></div>
+				<div class="note d"><div class="frets"></div></div>
+				<div class="note ds"><div class="frets"></div></div>
+				<div class="note e oct"><div class="frets"></div></div>
+				<div class="note f oct"><div class="frets"></div></div>
+				<div class="note fs oct"><div class="frets"></div></div>
+				<div class="note g oct"><div class="frets"></div></div>
+				<div class="note gs oct"><div class="frets"></div></div>
+				<div class="note a oct"><div class="frets"></div></div>
+				<div class="note as oct"><div class="frets"></div></div>
+				<div class="note b oct"><div class="frets"></div></div>
+				<div class="note c oct"><div class="frets"></div></div>
+				<div class="note cs oct"><div class="frets"></div></div>
+				<div class="note d oct"><div class="frets"></div></div>
+				<div class="note ds oct"><div class="frets"></div></div>
+				<div class="note e oct"><div class="frets"></div></div>
+			</div>
+
+			<div class="string-2">
+				<div class="open note b"><div class="fret1"></div></div>
+				<div class="note c"><div class="frets"></div></div>
+				<div class="note cs"><div class="frets"></div></div>
+				<div class="note d"><div class="frets"></div></div>
+				<div class="note ds"><div class="frets"></div></div>
+				<div class="note e"><div class="frets"></div></div>
+				<div class="note f"><div class="frets"></div></div>
+				<div class="note fs"><div class="frets"></div></div>
+				<div class="note g"><div class="frets"></div></div>
+				<div class="note gs"><div class="frets"></div></div>
+				<div class="note a"><div class="frets"></div></div>
+				<div class="note as"><div class="frets"></div></div>
+				<div class="note b oct"><div class="frets"></div></div>
+				<div class="note c oct"><div class="frets"></div></div>
+				<div class="note cs oct"><div class="frets"></div></div>
+				<div class="note d oct"><div class="frets"></div></div>
+				<div class="note ds oct"><div class="frets"></div></div>
+				<div class="note e oct"><div class="frets"></div></div>
+				<div class="note f oct"><div class="frets"></div></div>
+				<div class="note fs oct"><div class="frets"></div></div>
+				<div class="note g oct"><div class="frets"></div></div>
+				<div class="note gs oct"><div class="frets"></div></div>
+				<div class="note a oct"><div class="frets"></div></div>
+				<div class="note as oct"><div class="frets"></div></div>
+				<div class="note b oct"><div class="frets"></div></div>
+			</div>
+
+			<div  class="string-3">
+				<div class="open note g"><div class="fret1"></div></div>
+				<div class="note gs"><div class="frets"></div></div>
+				<div class="note a"><div class="frets"></div></div>
+				<div class="note as"><div class="frets"></div></div>
+				<div class="note b"><div class="frets"></div></div>
+				<div class="note c"><div class="frets"></div></div>
+				<div class="note cs"><div class="frets"></div></div>
+				<div class="note d"><div class="frets"></div></div>
+				<div class="note ds"><div class="frets"></div></div>
+				<div class="note e"><div class="frets"></div></div>
+				<div class="note f"><div class="frets"></div></div>
+				<div class="note fs"><div class="frets"></div></div>
+				<div class="note g oct"><div class="frets"></div></div>
+				<div class="note gs oct"><div class="frets"></div></div>
+				<div class="note a oct"><div class="frets"></div></div>
+				<div class="note as oct"><div class="frets"></div></div>
+				<div class="note b oct"><div class="frets"></div></div>
+				<div class="note c oct"><div class="frets"></div></div>
+				<div class="note cs oct"><div class="frets"></div></div>
+				<div class="note d oct"><div class="frets"></div></div>
+				<div class="note ds oct"><div class="frets"></div></div>
+				<div class="note e oct"><div class="frets"></div></div>
+				<div class="note f oct"><div class="frets"></div></div>
+				<div class="note fs oct"><div class="frets"></div></div>
+				<div class="note g oct"><div class="frets"></div></div>
+			</div>
+
+			<div  class="string-4">
+				<div class="open note d"><div class="fret1"></div></div>
+				<div class="note ds"><div class="frets"></div></div>
+				<div class="note e"><div class="frets"></div></div>
+				<div class="note f"><div class="frets"></div></div>
+				<div class="note fs"><div class="frets"></div></div>
+				<div class="note g"><div class="frets"></div></div>
+				<div class="note gs"><div class="frets"></div></div>
+				<div class="note a"><div class="frets"></div></div>
+				<div class="note as"><div class="frets"></div></div>
+				<div class="note b"><div class="frets"></div></div>
+				<div class="note c"><div class="frets"></div></div>
+				<div class="note cs"><div class="frets"></div></div>
+				<div class="note d oct"><div class="frets"></div></div>
+				<div class="note ds oct"><div class="frets"></div></div>
+				<div class="note e oct"><div class="frets"></div></div>
+				<div class="note f oct"><div class="frets"></div></div>
+				<div class="note fs oct"><div class="frets"></div></div>
+				<div class="note g oct"><div class="frets"></div></div>
+				<div class="note gs oct"><div class="frets"></div></div>
+				<div class="note a oct"><div class="frets"></div></div>
+				<div class="note as oct"><div class="frets"></div></div>
+				<div class="note b oct"><div class="frets"></div></div>
+				<div class="note c oct"><div class="frets"></div></div>
+				<div class="note cs oct"><div class="frets"></div></div>
+				<div class="note d oct"><div class="frets"></div></div>
+			</div>
+
+			<div  class="string-5">
+				<div class="open note a"><div class="fret1"></div></div>
+				<div class="note as"><div class="frets"></div></div>
+				<div class="note b"><div class="frets"></div></div>
+				<div class="note c"><div class="frets"></div></div>
+				<div class="note cs"><div class="frets"></div></div>
+				<div class="note d"><div class="frets"></div></div>
+				<div class="note ds"><div class="frets"></div></div>
+				<div class="note e"><div class="frets"></div></div>
+				<div class="note f"><div class="frets"></div></div>
+				<div class="note fs"><div class="frets"></div></div>
+				<div class="note g"><div class="frets"></div></div>
+				<div class="note gs"><div class="frets"></div></div>
+				<div class="note a oct"><div class="frets"></div></div>
+				<div class="note as oct"><div class="frets"></div></div>
+				<div class="note b oct"><div class="frets"></div></div>
+				<div class="note c oct"><div class="frets"></div></div>
+				<div class="note cs oct"><div class="frets"></div></div>
+				<div class="note d oct"><div class="frets"></div></div>
+				<div class="note ds oct"><div class="frets"></div></div>
+				<div class="note e oct"><div class="frets"></div></div>
+				<div class="note f oct"><div class="frets"></div></div>
+				<div class="note fs oct"><div class="frets"></div></div>
+				<div class="note g oct"><div class="frets"></div></div>
+				<div class="note gs oct"><div class="frets"></div></div>
+				<div class="note a oct"><div class="frets"></div></div>
+			</div>
+
+			<div  class="string-6">
+				<div class="open note e"><div class="fret1"></div></div>
+				<div class="note f"><div class="frets"></div></div>
+				<div class="note fs"><div class="frets"></div></div>
+				<div class="note g"><div class="frets"></div></div>
+				<div class="note gs"><div class="frets"></div></div>
+				<div class="note a"><div class="frets"></div></div>
+				<div class="note as"><div class="frets"></div></div>
+				<div class="note b"><div class="frets"></div></div>
+				<div class="note c"><div class="frets"></div></div>
+				<div class="note cs"><div class="frets"></div></div>
+				<div class="note d"><div class="frets"></div></div>
+				<div class="note ds"><div class="frets"></div></div>
+				<div class="note e oct"><div class="frets"></div></div>
+				<div class="note f oct"><div class="frets"></div></div>
+				<div class="note fs oct"><div class="frets"></div></div>
+				<div class="note g oct"><div class="frets"></div></div>
+				<div class="note gs oct"><div class="frets"></div></div>
+				<div class="note a oct"><div class="frets"></div></div>
+				<div class="note as oct"><div class="frets"></div></div>
+				<div class="note b oct"><div class="frets"></div></div>
+				<div class="note c oct"><div class="frets"></div></div>
+				<div class="note cs oct"><div class="frets"></div></div>
+				<div class="note d oct"><div class="frets"></div></div>
+				<div class="note ds oct"><div class="frets"></div></div>
+				<div class="note e oct"><div class="frets"></div></div>
+			</div>
+			<div class="guides">
+				<span class"fret3">3</span>
+				<span>5</span>
+				<span>7</span>
+				<span>9</span>
+				<span>12</span>
+				<span>15</span>
+				<span>17</span>
+				<span>19</span>
+				<span>21</span>
+				<span>24</span>
+				<!--<span class"fret3">III</span>
+				<span>V</span>
+				<span>VII</span>
+				<span>IX</span>
+				<span>XII</span>
+				<span>XV</span>
+				<span>XVII</span>
+				<span>XIX</span>
+				<span>XXI</span>
+				<span>XXIV</span>-->
+			</div>
+		</div>
+	</div>
+
+<!-- 
+	<div class="form-group col-md-6">
+
+		<div class="col-md-12" style="margin-bottom:15px;">
+			<div class="row">
+				<div class="inline">
+					<h3 class="inline">
+						<span id="root-name2"></span>
+						<span id="scale-name2">Please Select a Scale</span>
+					</h3>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 inline">
+					<select id="rootSelector2" class="form-control">
+						<option value="" >Select note</option>
+					  	<option value="a">A</option>
+					  	<option value="as">A#</option>
+						<option value="b">B</option>
+					  	<option value="c">C</option>
+					    <option value="cs">C#</option>
+					  	<option value="d">D</option>
+					    <option value="ds">D#</option>
+					  	<option value="e">E</option>
+					    <option value="f">F</option>
+					  	<option value="fs">F#</option>
+					    <option value="g">G</option>
+					  	<option value="gs">G#</option>
+					</select>
+				</div>
+				<div class="col-md-6 inline">
+					<select id="scaleSelector2" class="form-control">
+						<option value="">Select scale</option>
+					  	<option value="major-scale">Major scale</option>
+					  	<option value="minor-scale">Minor scale</option>
+						<option value="minor-harmonic-scale">Harmonic minor scale</option>
+					  	<option value="minor-melodic-scale">Melodic minor scale</option>
+					    <option value="minor-dorian-scale">Dorian Minor scale</option>
+					  	<option value="minor-blues-scale">Blues Minor scale</option>
+					    <option value="major-blues-scale">Blues Major scale</option>
+					  	<option value="mixolydian-scale">Mixolydian scale</option>
+					  	<option value="mixolydian-b13-scale">Mixolydian b13 scale</option>
+						<option value="mixolydian-b9-b13-scale">Mixolydian b9 b13 scale</option>
+					    <option value="lydian-scale">Lydian scale</option>
+					  	<option value="phrygian-scale">Phrygian scale</option>
+					    <option value="augmented-scale">Augmented scale</option>
+					  	<option value="diminished-scale-whole-half">Diminished scale(whole/half)</option>
+					  	<option value="diminished-scale-half-whole">Diminished scale(half/whole)</option>
+					</select>
+				</div>
+				<div class="col-md-2 inline">
+					<button id="actionButton2" class="btn btn-primary">Select</button>
+				</div>
+					
+			</div>
+		</div>
+		<div id="diapason2" class="col-md-12">
+			<div class="guides2">
+				<span class"fret3">III</span>
+				<span>V</span>
+				<span>VII</span>
+				<span>IX</span>
+				<span>XII</span>
+				<span>XV</span>
+				<span>XVII</span>
+				<span>XIX</span>
+				<span>XXI</span>
+				<span>XXIV</span>
+			</div>
+			<div class="string-1">
+				<div class="open note e"><div class="fret1"></div></div>
+				<div class="note f"><div class="frets"></div></div>
+				<div class="note fs"><div class="frets"></div></div>
+				<div class="note g"><div class="frets"></div></div>
+				<div class="note gs"><div class="frets"></div></div>
+				<div class="note a"><div class="frets"></div></div>
+				<div class="note as"><div class="frets"></div></div>
+				<div class="note b"><div class="frets"></div></div>
+				<div class="note c"><div class="frets"></div></div>
+				<div class="note cs"><div class="frets"></div></div>
+				<div class="note d"><div class="frets"></div></div>
+				<div class="note ds"><div class="frets"></div></div>
+				<div class="note e oct"><div class="frets"></div></div>
+				<div class="note f oct"><div class="frets"></div></div>
+				<div class="note fs oct"><div class="frets"></div></div>
+				<div class="note g oct"><div class="frets"></div></div>
+				<div class="note gs oct"><div class="frets"></div></div>
+				<div class="note a oct"><div class="frets"></div></div>
+				<div class="note as oct"><div class="frets"></div></div>
+				<div class="note b oct"><div class="frets"></div></div>
+				<div class="note c oct"><div class="frets"></div></div>
+				<div class="note cs oct"><div class="frets"></div></div>
+				<div class="note d oct"><div class="frets"></div></div>
+				<div class="note ds oct"><div class="frets"></div></div>
+				<div class="note e oct"><div class="frets"></div></div>
+			</div>
+
+			<div class="string-2">
+				<div class="open note b"><div class="fret1"></div></div>
+				<div class="note c"><div class="frets"></div></div>
+				<div class="note cs"><div class="frets"></div></div>
+				<div class="note d"><div class="frets"></div></div>
+				<div class="note ds"><div class="frets"></div></div>
+				<div class="note e"><div class="frets"></div></div>
+				<div class="note f"><div class="frets"></div></div>
+				<div class="note fs"><div class="frets"></div></div>
+				<div class="note g"><div class="frets"></div></div>
+				<div class="note gs"><div class="frets"></div></div>
+				<div class="note a"><div class="frets"></div></div>
+				<div class="note as"><div class="frets"></div></div>
+				<div class="note b oct"><div class="frets"></div></div>
+				<div class="note c oct"><div class="frets"></div></div>
+				<div class="note cs oct"><div class="frets"></div></div>
+				<div class="note d oct"><div class="frets"></div></div>
+				<div class="note ds oct"><div class="frets"></div></div>
+				<div class="note e oct"><div class="frets"></div></div>
+				<div class="note f oct"><div class="frets"></div></div>
+				<div class="note fs oct"><div class="frets"></div></div>
+				<div class="note g oct"><div class="frets"></div></div>
+				<div class="note gs oct"><div class="frets"></div></div>
+				<div class="note a oct"><div class="frets"></div></div>
+				<div class="note as oct"><div class="frets"></div></div>
+				<div class="note b oct"><div class="frets"></div></div>
+			</div>
+
+			<div  class="string-3">
+				<div class="open note g"><div class="fret1"></div></div>
+				<div class="note gs"><div class="frets"></div></div>
+				<div class="note a"><div class="frets"></div></div>
+				<div class="note as"><div class="frets"></div></div>
+				<div class="note b"><div class="frets"></div></div>
+				<div class="note c"><div class="frets"></div></div>
+				<div class="note cs"><div class="frets"></div></div>
+				<div class="note d"><div class="frets"></div></div>
+				<div class="note ds"><div class="frets"></div></div>
+				<div class="note e"><div class="frets"></div></div>
+				<div class="note f"><div class="frets"></div></div>
+				<div class="note fs"><div class="frets"></div></div>
+				<div class="note g oct"><div class="frets"></div></div>
+				<div class="note gs oct"><div class="frets"></div></div>
+				<div class="note a oct"><div class="frets"></div></div>
+				<div class="note as oct"><div class="frets"></div></div>
+				<div class="note b oct"><div class="frets"></div></div>
+				<div class="note c oct"><div class="frets"></div></div>
+				<div class="note cs oct"><div class="frets"></div></div>
+				<div class="note d oct"><div class="frets"></div></div>
+				<div class="note ds oct"><div class="frets"></div></div>
+				<div class="note e oct"><div class="frets"></div></div>
+				<div class="note f oct"><div class="frets"></div></div>
+				<div class="note fs oct"><div class="frets"></div></div>
+				<div class="note g oct"><div class="frets"></div></div>
+			</div>
+
+			<div  class="string-4">
+				<div class="open note d"><div class="fret1"></div></div>
+				<div class="note ds"><div class="frets"></div></div>
+				<div class="note e"><div class="frets"></div></div>
+				<div class="note f"><div class="frets"></div></div>
+				<div class="note fs"><div class="frets"></div></div>
+				<div class="note g"><div class="frets"></div></div>
+				<div class="note gs"><div class="frets"></div></div>
+				<div class="note a"><div class="frets"></div></div>
+				<div class="note as"><div class="frets"></div></div>
+				<div class="note b"><div class="frets"></div></div>
+				<div class="note c"><div class="frets"></div></div>
+				<div class="note cs"><div class="frets"></div></div>
+				<div class="note d oct"><div class="frets"></div></div>
+				<div class="note ds oct"><div class="frets"></div></div>
+				<div class="note e oct"><div class="frets"></div></div>
+				<div class="note f oct"><div class="frets"></div></div>
+				<div class="note fs oct"><div class="frets"></div></div>
+				<div class="note g oct"><div class="frets"></div></div>
+				<div class="note gs oct"><div class="frets"></div></div>
+				<div class="note a oct"><div class="frets"></div></div>
+				<div class="note as oct"><div class="frets"></div></div>
+				<div class="note b oct"><div class="frets"></div></div>
+				<div class="note c oct"><div class="frets"></div></div>
+				<div class="note cs oct"><div class="frets"></div></div>
+				<div class="note d oct"><div class="frets"></div></div>
+			</div>
+
+			<div  class="string-5">
+				<div class="open note a"><div class="fret1"></div></div>
+				<div class="note as"><div class="frets"></div></div>
+				<div class="note b"><div class="frets"></div></div>
+				<div class="note c"><div class="frets"></div></div>
+				<div class="note cs"><div class="frets"></div></div>
+				<div class="note d"><div class="frets"></div></div>
+				<div class="note ds"><div class="frets"></div></div>
+				<div class="note e"><div class="frets"></div></div>
+				<div class="note f"><div class="frets"></div></div>
+				<div class="note fs"><div class="frets"></div></div>
+				<div class="note g"><div class="frets"></div></div>
+				<div class="note gs"><div class="frets"></div></div>
+				<div class="note a oct"><div class="frets"></div></div>
+				<div class="note as oct"><div class="frets"></div></div>
+				<div class="note b oct"><div class="frets"></div></div>
+				<div class="note c oct"><div class="frets"></div></div>
+				<div class="note cs oct"><div class="frets"></div></div>
+				<div class="note d oct"><div class="frets"></div></div>
+				<div class="note ds oct"><div class="frets"></div></div>
+				<div class="note e oct"><div class="frets"></div></div>
+				<div class="note f oct"><div class="frets"></div></div>
+				<div class="note fs oct"><div class="frets"></div></div>
+				<div class="note g oct"><div class="frets"></div></div>
+				<div class="note gs oct"><div class="frets"></div></div>
+				<div class="note a oct"><div class="frets"></div></div>
+			</div>
+
+			<div  class="string-6">
+				<div class="open note e"><div class="fret1"></div></div>
+				<div class="note f"><div class="frets"></div></div>
+				<div class="note fs"><div class="frets"></div></div>
+				<div class="note g"><div class="frets"></div></div>
+				<div class="note gs"><div class="frets"></div></div>
+				<div class="note a"><div class="frets"></div></div>
+				<div class="note as"><div class="frets"></div></div>
+				<div class="note b"><div class="frets"></div></div>
+				<div class="note c"><div class="frets"></div></div>
+				<div class="note cs"><div class="frets"></div></div>
+				<div class="note d"><div class="frets"></div></div>
+				<div class="note ds"><div class="frets"></div></div>
+				<div class="note e oct"><div class="frets"></div></div>
+				<div class="note f oct"><div class="frets"></div></div>
+				<div class="note fs oct"><div class="frets"></div></div>
+				<div class="note g oct"><div class="frets"></div></div>
+				<div class="note gs oct"><div class="frets"></div></div>
+				<div class="note a oct"><div class="frets"></div></div>
+				<div class="note as oct"><div class="frets"></div></div>
+				<div class="note b oct"><div class="frets"></div></div>
+				<div class="note c oct"><div class="frets"></div></div>
+				<div class="note cs oct"><div class="frets"></div></div>
+				<div class="note d oct"><div class="frets"></div></div>
+				<div class="note ds oct"><div class="frets"></div></div>
+				<div class="note e oct"><div class="frets"></div></div>
+			</div>
+			<div class="guides2">
+				<span class"fret3">III</span>
+				<span>V</span>
+				<span>VII</span>
+				<span>IX</span>
+				<span>XII</span>
+				<span>XV</span>
+				<span>XVII</span>
+				<span>XIX</span>
+				<span>XXI</span>
+				<span>XXIV</span>
+			</div>
+		</div>
+	</div>
+-->
+</div>
+
+<script type="text/javascript">
+
+	let selectedRootValue = "";
+	let selectedScaleValue = "";
+
+	$('#rootSelector').change(function() {
+	    if ($(this).val() == 'a') {
+	        $('#root-name').html("A");
+	    } else if ($(this).val() == 'as') {
+	        $('#root-name').html("A#");
+	    } else if ($(this).val() == 'b') {
+	        $('#root-name').html("B");
+	    } else if ($(this).val() == 'c') {
+	        $('#root-name').html("C");
+	    } else if ($(this).val() == 'cs') {
+	        $('#root-name').html("C#");
+	    } else if ($(this).val() == 'd') {
+	        $('#root-name').html("D");
+	    } else if ($(this).val() == 'ds') {
+	        $('#root-name').html("D#");
+	    } else if ($(this).val() == 'e') {
+	        $('#root-name').html("E");
+	    } else if ($(this).val() == 'f') {
+	        $('#root-name').html("F");
+	    } else if ($(this).val() == 'fs') {
+	        $('#root-name').html("F#");
+	    } else if ($(this).val() == 'g') {
+	        $('#root-name').html("G");
+	    } else if ($(this).val() == 'gs') {
+	        $('#root-name').html("G#");
+	    }
+	    selectedRootValue = $(this).val();
+	    console.log("Root: " + selectedRootValue);
+	});
+
+	$('#scaleSelector').change(function() {
+	    if ($(this).val() == 'major-scale') {
+	        $('#scale-name').html("Major scale");
+	    } else if ($(this).val() == 'minor-scale') {
+	        $('#scale-name').html("Minor scale");
+	    } else if ($(this).val() == 'minor-harmonic-scale') {
+	        $('#scale-name').html("Harmonic minor scale");
+	    } else if ($(this).val() == 'minor-melodic-scale') {
+	        $('#scale-name').html("Melodic minor scale");
+	    } else if ($(this).val() == 'minor-dorian-scale') {
+	        $('#scale-name').html("Dorian Minor scale");
+	    } else if ($(this).val() == 'minor-blues-scale') {
+	        $('#scale-name').html("Blues Minor scale");
+	    } else if ($(this).val() == 'major-blues-scale') {
+	        $('#scale-name').html("Blues Major scale");
+	    } else if ($(this).val() == 'mixolydian-scale') {
+	        $('#scale-name').html("Mixolydian scale");
+	    } else if ($(this).val() == 'lydian-scale') {
+	        $('#scale-name').html("Lydian scale");
+	    } else if ($(this).val() == 'phrygian-scale') {
+	        $('#scale-name').html("Phrygian scale");
+	    } else if ($(this).val() == 'augmented-scale') {
+	        $('#scale-name').html("Augmented scale");
+	    } else if ($(this).val() == 'diminished-scale-whole-half') {
+	        $('#scale-name').html("Diminished scale (whole/half)");
+		} else if ($(this).val() == 'diminished-scale-half-whole') {
+	        $('#scale-name').html("Diminished scale (half/whole)");
+	    }	else if ($(this).val() == 'mixolydian-b13-scale') {
+	        $('#scale-name').html("Mixolydian b13 scale");
+	    } else if ($(this).val() == 'mixolydian-b9-b13-scale') {
+	        $('#scale-name').html("Mixolydian b9 b13 scale");
+	    }
+
+	    selectedScaleValue = $(this).val();
+		console.log("Scale: " + selectedScaleValue);
+	});
+
+	$("#actionButton").click(function() {
+	    $("#diapason").removeClass();
+	    $('.colored').removeClass('colored root');
+	    let resultado = armarEscala(selectedRootValue, selectedScaleValue);
+	    $(`div.${resultado.root}`).addClass('root');
+		resultado.scale.forEach(value => {
+			$(`div.${value}`).addClass('colored');
+		});
+	});
+
+	//let scaleObject = {};
+
+	const posiciones = [
+		"primera",
+		"segundaMenor",
+		"segundaMayor",
+		"terceraMenor",
+		"terceraMayor",
+		"cuarta",
+		"cuartaAumentada",
+		"quinta",
+		"sextaMenor",
+		"sextaMayor",
+		"septimaMenor",
+		"septimaMayor"
+	];
+
+	const escalas = {
+		"minor-harmonic-scale": [
+			"primera",
+			"segundaMayor",
+			"terceraMenor",
+			"cuarta",
+			"quinta",
+			"sextaMenor",
+			"septimaMayor"
+		],
+		"major-scale": [
+			"primera",
+			"segundaMayor",
+			"terceraMayor",
+			"cuarta",
+			"quinta",
+			"sextaMayor",
+			"septimaMayor"
+		],
+		"minor-scale": [
+			"primera",
+			"segundaMayor",
+			"terceraMenor",
+			"cuarta",
+			"quinta",
+			"sextaMenor",
+			"septimaMenor"
+		],
+		"minor-melodic-scale": [
+			"primera",
+			"segundaMayor",
+			"terceraMenor",
+			"cuarta",
+			"quinta",
+			"sextaMayor",
+			"septimaMayor"
+		],
+		"minor-dorian-scale": [
+			"primera",
+			"segundaMayor",
+			"terceraMenor",
+			"cuarta",
+			"quinta",
+			"sextaMayor",
+			"septimaMenor"
+		],
+		"minor-blues-scale": [
+			"primera",
+			"terceraMenor",
+			"cuarta",
+			"cuartaAumentada",
+			"quinta",
+			"septimaMenor"
+		],
+		"major-blues-scale": [
+			"primera",
+			"segundaMayor",
+			"terceraMenor",
+			"terceraMayor",
+			"quinta",
+			"sextaMayor"
+		],
+		"mixolydian-scale": [
+			"primera",
+			"segundaMayor",
+			"terceraMayor",
+			"cuarta",
+			"quinta",
+			"sextaMayor",
+			"septimaMenor"
+		],
+	    "mixolydian-b13-scale": [//5º modo de la escala menor melódica
+			"primera",
+			"segundaMayor",
+			"terceraMayor",
+			"cuarta",
+			"quinta",
+			"sextaMenor",
+			"septimaMenor"
+		],
+		"mixolydian-b9-b13-scale": [//5º modo de la escala menor armónica. También llamada Frigia mayor o Frigia dominante.
+			"primera",
+			"segundaMenor",
+			"terceraMayor",
+			"cuarta",
+			"quinta",
+			"sextaMenor",
+			"septimaMenor"
+		],
+		"lydian-scale": [
+			"primera",
+			"segundaMayor",
+			"terceraMayor",
+			"cuartaAumentada",
+			"quinta",
+			"sextaMayor",
+			"septimaMayor"
+		],
+		"phrygian-scale": [
+			"primera",
+			"segundaMenor",
+			"terceraMenor",
+			"cuarta",
+			"quinta",
+			"sextaMenor",
+			"septimaMenor"
+		],
+		"augmented-scale": [
+			"primera",
+			"terceraMenor",
+			"terceraMayor",
+			"quinta",
+			"sextaMenor",
+			"septimaMayor"
+		],
+		"diminished-scale-whole-half": [
+			"primera",
+			"segundaMayor",
+			"terceraMenor",
+			"cuarta",
+			"cuartaAumentada",
+			"sextaMenor",
+			"sextaMayor",
+			"septimaMayor"
+		],
+		"diminished-scale-half-whole": [
+			"primera",
+			"segundaMenor",
+			"terceraMenor",
+			"terceraMayor",
+			"cuartaAumentada",
+			"quinta",
+			"sextaMayor",
+			"septimaMenor"
+		]
+	}
+
+	const referencia = {
+		c: [ "c", "cs", "d", "ds", "e", "f", "fs", "g", "gs", "a", "as", "b"],
+		cs: [ "cs", "d", "ds", "e", "f", "fs", "g", "gs", "a", "as", "b", "c"],
+		d: [ "d", "ds", "e", "f", "fs", "g", "gs", "a", "as", "b", "c", "cs"],
+		ds: [ "ds", "e", "f", "fs", "g", "gs", "a", "as", "b", "c", "cs", "d"],
+		e: [ "e", "f", "fs", "g", "gs", "a", "as", "b", "c", "cs","d", "ds"],
+		f: [ "f", "fs", "g", "gs", "a", "as", "b", "c", "cs", "d", "ds", "e"],
+		fs: [ "fs", "g", "gs", "a", "as", "b", "c", "cs", "d", "ds", "e", "f"],
+		g: [ "g", "gs", "a", "as", "b", "c", "cs", "d", "ds", "e", "f", "fs"],
+		gs: [ "gs", "a", "as", "b", "c", "cs", "d", "ds", "e", "f", "fs", "g"],
+		a: [ "a", "as", "b", "c", "cs", "d", "ds", "e", "f", "fs", "g", "gs"],
+		as: [ "as", "b", "c", "cs", "d", "ds", "e", "f", "fs", "g", "gs", "a"],
+		b: [ "b", "c", "cs","d", "ds", "e", "f", "fs", "g", "gs", "a", "as"]
+	}
+
+	/* function getReferencia(root) {
+		var base = [ "c", "cs", "d", "ds", "e", "f", "fs", "g", "gs", "a", "as", "b"];
+		/* seguún indice uso splice y lo muevo* /
+		return newBase;
+	}*/
+								//c    //Harmonica
+	let armarEscala = function (root, scale) { 
+		let result = {};
+		// esto :
+		/*posiciones.forEach((posicion, indice) => {
+			result[posicion] = referencia[root][indice]; 
+		});*/
+
+		// es equivalente a :
+		for(let i = 0;  i < posiciones.length; i++) {
+			let posicion = posiciones[i];
+			result[posicion] = referencia[root][i];
+		}
+
+		let scaleObject = {};
+		let scaleArray = [];
+
+		for(let i = 0;  i < escalas[scale].length; i++) {
+			let posicion = escalas[scale][i];
+			// no hace falta si no necesitas los nombres de las posiciones: 
+			scaleObject[posicion] = result[posicion];
+			scaleArray.push(result[posicion]);
+		}
+		
+		let keys = Object.keys(scaleObject);
+		console.log();
+
+		let values = Object.values(scaleObject);
+		console.log('Keys: ' + keys + '\n' + 'Values: ' + values);
+
+		return {
+			root: root,
+			scale: scaleArray
+		};
+	}
+
+</script>
+</body>
+</html>

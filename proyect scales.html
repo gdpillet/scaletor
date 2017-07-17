@@ -1,0 +1,984 @@
+<!-- Original version without help -->
+<html>
+<head>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+	<link rel="shortcut icon" type="image/png" href="favicon-16x16.png"/>
+	
+	<style>
+		body {font-family: 'Icons', 'Roboto', sans-serif;}
+		.note {
+			display: inline-block;
+			height:1em;
+			width:1em;
+			/*border:1px solid #ddd;*/
+			position: relative;
+		    right: 30px;
+		    border-radius: 1em;
+		}
+
+		.string-1,
+		.string-2,
+		.string-3,
+		.string-4,
+		.string-5,
+		.string-6 {
+			height:1em;
+			padding: 3px 0 3px 0px;
+			margin:1px 0 1px 0;
+			background-image: url("cuerda.png");
+			background-repeat: no-repeat;
+			background-position: 1px 11px;
+			background-size: 500px;
+		}
+
+		.string-1 {
+			border-top: 1px solid #bababa;
+		}
+		.string-6 {
+			border-bottom: 1px solid #bababa;
+		}
+
+	/* OPEN STRINGS */
+		.open {
+			margin-right:10px;
+		}
+
+	/* separates open strings from the rest */
+		#diapason {
+		    position: relative;
+		    right: -30px;
+		    width: 520px;
+		} 
+	/* FRETS */
+		.fret1 {
+		    border-right: 2px solid black;
+		    height: 1em;
+		    width: 1em;
+		    position: relative;
+		    top: -7px;
+		    padding: 10px 12px 2px 0px;
+		}
+		.frets {
+		    height: 1em;
+		    width: 1em;
+		    position: relative;
+		    border-right: 1px solid black;
+		    top: -7px;
+		    padding: 10px 2px 2px 0px;
+		}
+		.guides {font-size: 9px;}
+		.guides span:nth-child(1) {margin:0 0 0 46px; }/*3*/
+		.guides span:nth-child(2) {margin:0 0 0 33px; }/*5*/
+		.guides span:nth-child(3) {margin:0 0 0 33px; }/*7*/
+		.guides span:nth-child(4) {margin:0 0 0 33px; }/*9*/
+		.guides span:nth-child(5) {margin:0 0 0 50px; }/*12*/
+		.guides span:nth-child(6) {margin:0 0 0 48px; }/*15*/
+		.guides span:nth-child(7) {margin:0 0 0 28px; }/*17*/
+		.guides span:nth-child(8) {margin:0 0 0 28px; }/*19*/
+		.guides span:nth-child(9) {margin:0 0 0 29px; }/*21*/
+		.guides span:nth-child(10) {margin:0 0 0 48px; }/*24*/	
+
+	.colored {background-color: violet;}	
+	.root {background-color: purple;}
+
+	/* C MAJOR SCALE */
+		.c-major-scale .a,
+		.c-major-scale .b,
+		.c-major-scale .c,
+		.c-major-scale .d,
+		.c-major-scale .e,
+		.c-major-scale .f,
+		.c-major-scale .g {background-color: lightgreen;}
+		.c-major-scale .c {background-color: green;}     /* <-- ROOT  */
+
+	/* C MINOR */ 
+		.c-minor-scale .as,
+		.c-minor-scale .c,
+		.c-minor-scale .d,
+		.c-minor-scale .ds,
+		.c-minor-scale .f,
+		.c-minor-scale .g,
+		.c-minor-scale .gs {background-color: bisque;}
+		.c-minor-scale .c {background-color: orange;} 		/* <-- ROOT  */
+
+	/* C MINOR HARMONIC*/ 
+		.c-minor-harmonic-scale .b,
+		.c-minor-harmonic-scale .c,
+		.c-minor-harmonic-scale .d,
+		.c-minor-harmonic-scale .ds,
+		.c-minor-harmonic-scale .f,
+		.c-minor-harmonic-scale .g,
+		.c-minor-harmonic-scale .gs {background-color: darkgrey;}
+		.c-minor-harmonic-scale .c {background-color: black;} 		/* <-- ROOT  */
+
+	/* C MINOR MELODIC*/ 
+		.c-minor-melodic-scale .b,
+		.c-minor-melodic-scale .c,
+		.c-minor-melodic-scale .d,
+		.c-minor-melodic-scale .ds,
+		.c-minor-melodic-scale .f,
+		.c-minor-melodic-scale .g,
+		.c-minor-melodic-scale .a {background-color: lightblue;}
+		.c-minor-melodic-scale .c {background-color: blue;} 		/* <-- ROOT  */
+
+	/* C MINOR DORIAN*/ 
+		.c-minor-dorian-scale .a,	
+		.c-minor-dorian-scale .as,
+		.c-minor-dorian-scale .c,
+		.c-minor-dorian-scale .d,
+		.c-minor-dorian-scale .ds,
+		.c-minor-dorian-scale .f,
+		.c-minor-dorian-scale .g {background-color: pink;}
+		.c-minor-dorian-scale .c {background-color: red;} 		/* <-- ROOT  */
+
+
+	/* C MINOR BLUES */ 	
+		.c-minor-blues-scale .as,
+		.c-minor-blues-scale .c,
+		.c-minor-blues-scale .ds,
+		.c-minor-blues-scale .f,
+		.c-minor-blues-scale .fs,
+		.c-minor-blues-scale .g {background-color: violet;}
+		.c-minor-blues-scale .c {background-color: purple;} 		/* <-- ROOT  */
+
+	/* C MAJOR BLUES */ 	
+		.c-major-blues-scale .c,
+		.c-major-blues-scale .d,
+		.c-major-blues-scale .ds,
+		.c-major-blues-scale .e,
+		.c-major-blues-scale .g,
+		.c-major-blues-scale .a {background-color: burlywood;}
+		.c-major-blues-scale .c {background-color: brown;} 		/* <-- ROOT  */
+
+	/* C MIXOLYDIAN */
+		.c-mixolydian-scale .c,
+		.c-mixolydian-scale .d,
+		.c-mixolydian-scale .e,
+		.c-mixolydian-scale .f,
+		.c-mixolydian-scale .g,
+		.c-mixolydian-scale .a,
+		.c-mixolydian-scale .as {background-color: cadetblue;}
+		.c-mixolydian-scale .c {background-color: slateblue;} 		/* <-- ROOT  */
+
+	/* C LYDIAN */
+		.c-lydian-scale .c,
+		.c-lydian-scale .d,
+		.c-lydian-scale .e,
+		.c-lydian-scale .fs,
+		.c-lydian-scale .g,
+		.c-lydian-scale .a,
+		.c-lydian-scale .b {background-color: cadetblue;}
+		.c-lydian-scale .c {background-color: slateblue;} 		/* <-- ROOT  */
+
+	/* C PHRYGIAN*/
+		.c-phrygian-scale .c,
+		.c-phrygian-scale .cs,
+		.c-phrygian-scale .ds,
+		.c-phrygian-scale .f,
+		.c-phrygian-scale .g,
+		.c-phrygian-scale .gs,
+		.c-phrygian-scale .as {background-color: cadetblue;}
+		.c-phrygian-scale .c {background-color: slateblue;} 		/* <-- ROOT  */
+
+	/* C AUGMENTED */
+		.c-augmented-scale .c,
+		.c-augmented-scale .ds,
+		.c-augmented-scale .e,
+		.c-augmented-scale .g,
+		.c-augmented-scale .gs,
+		.c-augmented-scale .b {background-color: cadetblue;}
+		.c-augmented-scale .c {background-color: slateblue;} 		/* <-- ROOT  */
+
+	/* C DIMINISHEDED */
+		.c-diminished-scale .c,
+		.c-diminished-scale .d,
+		.c-diminished-scale .ds,
+		.c-diminished-scale .f,
+		.c-diminished-scale .fs,
+		.c-diminished-scale .gs,
+		.c-diminished-scale .a,
+		.c-diminished-scale .b {background-color: cadetblue;}
+		.c-diminished-scale .c {background-color: slateblue;} 		/* <-- ROOT  */
+	</style>
+</head>
+<body>
+	<h2><img src="Skeletor-head.png" title="go with he-man" style="height:32px;width:32px;margin: 0px -2px -8px 0" />Scaletor v1.0</h2>
+	<h3>
+		<span id="root-name"></span>
+		<span id="scale-name">Please Select a Scale</span>
+	</h3>
+	<select id="rootSelector">
+		<option value="" >Select note</option>
+	  	<option value="a">A</option>
+	  	<option value="as">A#</option>
+		<option value="b">B</option>
+	  	<option value="c">C</option>
+	    <option value="cs">C#</option>
+	  	<option value="d">D</option>
+	    <option value="ds">D#</option>
+	  	<option value="e">E</option>
+	    <option value="f">F</option>
+	  	<option value="fs">F#</option>
+	    <option value="g">G</option>
+	  	<option value="gs">G#</option>
+	</select>
+
+	<select id="scaleSelector">
+		<option value="">Select scale</option>
+	  	<option value="major-scale">Major scale</option>
+	  	<option value="minor-scale">Minor scale</option>
+		<option value="minor-harmonic-scale">Harmonic minor scale</option>
+	  	<option value="minor-melodic-scale">Melodic minor scale</option>
+	    <option value="minor-dorian-scale">Minor Dorian scale</option>
+	  	<option value="minor-blues-scale">Minor Blues scale</option>
+	    <option value="major-blues-scale">Major Blues scale</option>
+	  	<option value="mixolydian-scale">Mixolydian scale</option>
+	    <option value="lydian-scale">Lydian scale</option>
+	  	<option value="phrygian-scale">Phrygian scale</option>
+	    <option value="augmented-scale">Augmented scale</option>
+	  	<option value="diminished-scale">Diminished scale</option>
+	</select>
+	<button id="actionButton">Select</button>
+	<span id="actionContainer"></span>
+	<p>
+		<button id="c-major" onclick="">c major</button>
+		<button id="c-minor">c minor</button>
+		<button id="c-minor-harmonic" onclick="">c minor harmonic</button>
+		<button id="c-minor-melodic">c minor melodic</button>
+		<button id="c-minor-dorian">c minor dorian</button>
+		<button id="c-minor-blues">c minor blues</button>
+		<button id="c-major-blues">c major blues</button>
+		<button id="c-mixolydian">c mixolydian</button>
+		<button id="c-lydian">c lydian</button>
+		<button id="c-phrygian">c phrygian</button>
+		<button id="c-augmented">c augmented</button>
+		<button id="c-diminished">c diminished</button>
+	</p>
+<div id="diapason" class=" ">
+	<div class="string-1">
+		<div class="open note e"><div class="fret1"></div></div>
+		<div class="note f"><div class="frets"></div></div>
+		<div class="note fs"><div class="frets"></div></div>
+		<div class="note g"><div class="frets"></div></div>
+		<div class="note gs"><div class="frets"></div></div>
+		<div class="note a"><div class="frets"></div></div>
+		<div class="note as"><div class="frets"></div></div>
+		<div class="note b"><div class="frets"></div></div>
+		<div class="note c"><div class="frets"></div></div>
+		<div class="note cs"><div class="frets"></div></div>
+		<div class="note d"><div class="frets"></div></div>
+		<div class="note ds"><div class="frets"></div></div>
+		<div class="note e oct"><div class="frets"></div></div>
+		<div class="note f oct"><div class="frets"></div></div>
+		<div class="note fs oct"><div class="frets"></div></div>
+		<div class="note g oct"><div class="frets"></div></div>
+		<div class="note gs oct"><div class="frets"></div></div>
+		<div class="note a oct"><div class="frets"></div></div>
+		<div class="note as oct"><div class="frets"></div></div>
+		<div class="note b oct"><div class="frets"></div></div>
+		<div class="note c oct"><div class="frets"></div></div>
+		<div class="note cs oct"><div class="frets"></div></div>
+		<div class="note d oct"><div class="frets"></div></div>
+		<div class="note ds oct"><div class="frets"></div></div>
+		<div class="note e oct"><div class="frets"></div></div>
+	</div>
+
+	<div class="string-2">
+		<div class="open note b"><div class="fret1"></div></div>
+		<div class="note c"><div class="frets"></div></div>
+		<div class="note cs"><div class="frets"></div></div>
+		<div class="note d"><div class="frets"></div></div>
+		<div class="note ds"><div class="frets"></div></div>
+		<div class="note e"><div class="frets"></div></div>
+		<div class="note f"><div class="frets"></div></div>
+		<div class="note fs"><div class="frets"></div></div>
+		<div class="note g"><div class="frets"></div></div>
+		<div class="note gs"><div class="frets"></div></div>
+		<div class="note a"><div class="frets"></div></div>
+		<div class="note as"><div class="frets"></div></div>
+		<div class="note b oct"><div class="frets"></div></div>
+		<div class="note c oct"><div class="frets"></div></div>
+		<div class="note cs oct"><div class="frets"></div></div>
+		<div class="note d oct"><div class="frets"></div></div>
+		<div class="note ds oct"><div class="frets"></div></div>
+		<div class="note e oct"><div class="frets"></div></div>
+		<div class="note f oct"><div class="frets"></div></div>
+		<div class="note fs oct"><div class="frets"></div></div>
+		<div class="note g oct"><div class="frets"></div></div>
+		<div class="note gs oct"><div class="frets"></div></div>
+		<div class="note a oct"><div class="frets"></div></div>
+		<div class="note as oct"><div class="frets"></div></div>
+		<div class="note b oct"><div class="frets"></div></div>
+	</div>
+
+	<div  class="string-3">
+		<div class="open note g"><div class="fret1"></div></div>
+		<div class="note gs"><div class="frets"></div></div>
+		<div class="note a"><div class="frets"></div></div>
+		<div class="note as"><div class="frets"></div></div>
+		<div class="note b"><div class="frets"></div></div>
+		<div class="note c"><div class="frets"></div></div>
+		<div class="note cs"><div class="frets"></div></div>
+		<div class="note d"><div class="frets"></div></div>
+		<div class="note ds"><div class="frets"></div></div>
+		<div class="note e"><div class="frets"></div></div>
+		<div class="note f"><div class="frets"></div></div>
+		<div class="note fs"><div class="frets"></div></div>
+		<div class="note g oct"><div class="frets"></div></div>
+		<div class="note gs oct"><div class="frets"></div></div>
+		<div class="note a oct"><div class="frets"></div></div>
+		<div class="note as oct"><div class="frets"></div></div>
+		<div class="note b oct"><div class="frets"></div></div>
+		<div class="note c oct"><div class="frets"></div></div>
+		<div class="note cs oct"><div class="frets"></div></div>
+		<div class="note d oct"><div class="frets"></div></div>
+		<div class="note ds oct"><div class="frets"></div></div>
+		<div class="note e oct"><div class="frets"></div></div>
+		<div class="note f oct"><div class="frets"></div></div>
+		<div class="note fs oct"><div class="frets"></div></div>
+		<div class="note g oct"><div class="frets"></div></div>
+	</div>
+
+	<div  class="string-4">
+		<div class="open note d"><div class="fret1"></div></div>
+		<div class="note ds"><div class="frets"></div></div>
+		<div class="note e"><div class="frets"></div></div>
+		<div class="note f"><div class="frets"></div></div>
+		<div class="note fs"><div class="frets"></div></div>
+		<div class="note g"><div class="frets"></div></div>
+		<div class="note gs"><div class="frets"></div></div>
+		<div class="note a"><div class="frets"></div></div>
+		<div class="note as"><div class="frets"></div></div>
+		<div class="note b"><div class="frets"></div></div>
+		<div class="note c"><div class="frets"></div></div>
+		<div class="note cs"><div class="frets"></div></div>
+		<div class="note d oct"><div class="frets"></div></div>
+		<div class="note ds oct"><div class="frets"></div></div>
+		<div class="note e oct"><div class="frets"></div></div>
+		<div class="note f oct"><div class="frets"></div></div>
+		<div class="note fs oct"><div class="frets"></div></div>
+		<div class="note g oct"><div class="frets"></div></div>
+		<div class="note gs oct"><div class="frets"></div></div>
+		<div class="note a oct"><div class="frets"></div></div>
+		<div class="note as oct"><div class="frets"></div></div>
+		<div class="note b oct"><div class="frets"></div></div>
+		<div class="note c oct"><div class="frets"></div></div>
+		<div class="note cs oct"><div class="frets"></div></div>
+		<div class="note d oct"><div class="frets"></div></div>
+	</div>
+
+	<div  class="string-5">
+		<div class="open note a"><div class="fret1"></div></div>
+		<div class="note as"><div class="frets"></div></div>
+		<div class="note b"><div class="frets"></div></div>
+		<div class="note c"><div class="frets"></div></div>
+		<div class="note cs"><div class="frets"></div></div>
+		<div class="note d"><div class="frets"></div></div>
+		<div class="note ds"><div class="frets"></div></div>
+		<div class="note e"><div class="frets"></div></div>
+		<div class="note f"><div class="frets"></div></div>
+		<div class="note fs"><div class="frets"></div></div>
+		<div class="note g"><div class="frets"></div></div>
+		<div class="note gs"><div class="frets"></div></div>
+		<div class="note a oct"><div class="frets"></div></div>
+		<div class="note as oct"><div class="frets"></div></div>
+		<div class="note b oct"><div class="frets"></div></div>
+		<div class="note c oct"><div class="frets"></div></div>
+		<div class="note cs oct"><div class="frets"></div></div>
+		<div class="note d oct"><div class="frets"></div></div>
+		<div class="note ds oct"><div class="frets"></div></div>
+		<div class="note e oct"><div class="frets"></div></div>
+		<div class="note f oct"><div class="frets"></div></div>
+		<div class="note fs oct"><div class="frets"></div></div>
+		<div class="note g oct"><div class="frets"></div></div>
+		<div class="note gs oct"><div class="frets"></div></div>
+		<div class="note a oct"><div class="frets"></div></div>
+	</div>
+
+	<div  class="string-6">
+		<div class="open note e"><div class="fret1"></div></div>
+		<div class="note f"><div class="frets"></div></div>
+		<div class="note fs"><div class="frets"></div></div>
+		<div class="note g"><div class="frets"></div></div>
+		<div class="note gs"><div class="frets"></div></div>
+		<div class="note a"><div class="frets"></div></div>
+		<div class="note as"><div class="frets"></div></div>
+		<div class="note b"><div class="frets"></div></div>
+		<div class="note c"><div class="frets"></div></div>
+		<div class="note cs"><div class="frets"></div></div>
+		<div class="note d"><div class="frets"></div></div>
+		<div class="note ds"><div class="frets"></div></div>
+		<div class="note e oct"><div class="frets"></div></div>
+		<div class="note f oct"><div class="frets"></div></div>
+		<div class="note fs oct"><div class="frets"></div></div>
+		<div class="note g oct"><div class="frets"></div></div>
+		<div class="note gs oct"><div class="frets"></div></div>
+		<div class="note a oct"><div class="frets"></div></div>
+		<div class="note as oct"><div class="frets"></div></div>
+		<div class="note b oct"><div class="frets"></div></div>
+		<div class="note c oct"><div class="frets"></div></div>
+		<div class="note cs oct"><div class="frets"></div></div>
+		<div class="note d oct"><div class="frets"></div></div>
+		<div class="note ds oct"><div class="frets"></div></div>
+		<div class="note e oct"><div class="frets"></div></div>
+	</div>
+	<div class="guides">
+		<span class"fret3">3</span>
+		<span>5</span>
+		<span>7</span>
+		<span>9</span>
+		<span>12</span>
+		<span>15</span>
+		<span>17</span>
+		<span>19</span>
+		<span>21</span>
+		<span>24</span>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$("#c-major").click(function(){
+		$("#diapason").removeClass();
+    	$("#diapason").addClass("c-major-scale");
+    	$("#scale-name").html("C Major scale");
+	});
+	$("#c-minor").click(function(){
+    	$("#diapason").removeClass();
+    	$("#diapason").addClass("c-minor-scale");
+    	$("#scale-name").html("C minor scale");
+	});
+	$("#c-minor-harmonic").click(function(){
+    	$("#diapason").removeClass();
+    	$("#diapason").addClass("c-minor-harmonic-scale");
+    	$("#scale-name").html("C Harmonic minor scale");
+	});
+	$("#c-minor-melodic").click(function(){
+    	$("#diapason").removeClass();
+    	$("#diapason").addClass("c-minor-melodic-scale");
+		$("#scale-name").html("C Melodic minor scale");
+	});
+	$("#c-minor-dorian").click(function(){
+    	$("#diapason").removeClass();
+    	$("#diapason").addClass("c-minor-dorian-scale");
+    	$("#scale-name").html("C minor Dorian scale");
+	});
+	$("#c-minor-blues").click(function(){
+    	$("#diapason").removeClass();
+    	$("#diapason").addClass("c-minor-blues-scale");
+    	$("#scale-name").html("C minor Blues scale");
+	});
+	$("#c-major-blues").click(function(){
+    	$("#diapason").removeClass();
+    	$("#diapason").addClass("c-major-blues-scale");
+    	$("#scale-name").html("C major Blues scale");
+	});
+	$("#c-mixolydian").click(function(){
+    	$("#diapason").removeClass();
+    	$("#diapason").addClass("c-mixolydian-scale");
+    	$("#scale-name").html("C major Blues scale");
+	});
+	
+
+
+	$("#c-lydian").click(function(){
+		$("#diapason").removeClass();
+    	$("#diapason").addClass("c-lydian-scale");
+    	$("#scale-name").html("C Lydian scale");
+	});
+	$("#c-phrygian").click(function(){
+		$("#diapason").removeClass();
+    	$("#diapason").addClass("c-phrygian-scale");
+    	$("#scale-name").html("C Phrygian scale");
+	});
+	$("#c-augmented").click(function(){
+		$("#diapason").removeClass();
+    	$("#diapason").addClass("c-augmented-scale");
+    	$("#scale-name").html("C Augmented scale");
+	});
+	$("#c-diminished").click(function(){
+		$("#diapason").removeClass();
+    	$("#diapason").addClass("c-diminished-scale");
+    	$("#scale-name").html("C Diminished scale");
+	});
+
+	var selectedRootValue = "";
+	var selectedScaleValue = "";
+
+	$('#rootSelector').change(function() {
+	    if ($(this).val() == 'a') {
+	        $('#root-name').html("A");
+	    } else if ($(this).val() == 'as') {
+	        $('#root-name').html("A#");
+	    } else if ($(this).val() == 'b') {
+	        $('#root-name').html("B");
+	    } else if ($(this).val() == 'c') {
+	        $('#root-name').html("C");
+	    } else if ($(this).val() == 'cs') {
+	        $('#root-name').html("C#");
+	    } else if ($(this).val() == 'd') {
+	        $('#root-name').html("D");
+	    } else if ($(this).val() == 'ds') {
+	        $('#root-name').html("D#");
+	    } else if ($(this).val() == 'e') {
+	        $('#root-name').html("E");
+	    } else if ($(this).val() == 'f') {
+	        $('#root-name').html("F");
+	    } else if ($(this).val() == 'fs') {
+	        $('#root-name').html("F#");
+	    } else if ($(this).val() == 'g') {
+	        $('#root-name').html("G");
+	    } else if ($(this).val() == 'gs') {
+	        $('#root-name').html("G#");
+	    }
+	    selectedRootValue = $(this).val();
+	    console.log("Root: " + selectedRootValue);
+	});
+
+	$('#scaleSelector').change(function() {
+	    if ($(this).val() == 'major-scale') {
+	        $('#scale-name').html("Major scale");
+	    } else if ($(this).val() == 'minor-scale') {
+	        $('#scale-name').html("Minor scale");
+	    } else if ($(this).val() == 'minor-harmonic-scale') {
+	        $('#scale-name').html("Harmonic minor scale");
+	    } else if ($(this).val() == 'minor-melodic-scale') {
+	        $('#scale-name').html("Melodic minor scale");
+	    } else if ($(this).val() == 'minor-dorian-scale') {
+	        $('#scale-name').html("Minor Dorian scale");
+	    } else if ($(this).val() == 'minor-blues-scale') {
+	        $('#scale-name').html("Minor Blues scale");
+	    } else if ($(this).val() == 'major-blues-scale') {
+	        $('#scale-name').html("Major Blues scale");
+	    } else if ($(this).val() == 'mixolydian-scale') {
+	        $('#scale-name').html("Mixolydian scale");
+	    } else if ($(this).val() == 'lydian-scale') {
+	        $('#scale-name').html("Lydian scale");
+	    } else if ($(this).val() == 'phrygian-scale') {
+	        $('#scale-name').html("Phrygian scale");
+	    } else if ($(this).val() == 'augmented-scale') {
+	        $('#scale-name').html("Augmented scale");
+	    } else if ($(this).val() == 'diminished-scale-whole-half') {
+	        $('#scale-name').html("Diminished scale whole half");
+	    } else if ($(this).val() == 'diminished-scale-half-whole') {
+	        $('#scale-name').html("Diminished scale half whole");
+	    }
+	    selectedScaleValue = $(this).val();
+		console.log("Scale: " + selectedScaleValue);
+	    //return console.log(selectedScaleValue);
+	});
+
+	$("#actionButton").click(function() {
+	    $("#diapason").removeClass();
+	    $('.note').removeClass('colored root');
+	    //$("#diapason").addClass(selectedRootValue + "-" + selectedScaleValue); //css way
+	    var resultado = armarEscala(selectedRootValue, selectedScaleValue);
+	    console.log("resultado.root: " + resultado.root);
+	    console.log("resultado.scale: " + resultado.scale);
+	    $(`div.${resultado.root}`).addClass('root');
+		resultado.scale.forEach(value => {
+			$(`div.${value}`).addClass('colored');
+		});
+
+	});
+
+var minorHarmonicScaleObject = {};
+var mayorScaleObject = {};
+var minorScaleObject = {};
+var minorBluesScaleObject = {};
+var minorMelodicScaleObject = {};
+var minorDorianScaleObject = {};
+var lydianScaleObject = {};
+var mixolydianScaleObject = {};
+var phrygianScaleObject = {};
+var augmentedScaleObject = {};
+var diminishedScaleObject = {};
+var augmentedScaleObject = {};
+
+//formula escala Menor Harmonica(7 notas)
+/*	var minorHarmonicScaleObject = {
+		primera: "",
+		segundaMayor: "",
+		terceraMenor: "",
+		cuarta: "",
+		quinta: "",
+		sextaMenor: "",
+		septimaMayor: ""
+	}
+*/
+
+
+
+	var scaleObject = {};
+
+/*
+	var blabla = {
+		primera: "",
+		segundaMenor: "",
+		segundaMayor: "",
+		terceraMenor: "",
+		terceraMayor:  "",
+		cuarta: "",
+		cuartaAumentada: "",
+		quinta:  "",
+		sextaMenor: "",
+		sextaMayor: "",
+		septimaMenor: "",
+		septimaMayor: ""
+	};
+*/
+/*
+	var posiciones = [
+		"primera",
+		"segundaMenor",
+		"segundaMayor",
+		"terceraMenor",
+		"terceraMayor",
+		"cuarta",
+		"cuartaAumentada",
+		"quinta",
+		"sextaMenor",
+		"sextaMayor",
+		"septimaMenor",
+		"septimaMayor"
+	];
+*/
+/*
+	var posicionesHarmonica = [
+		"primera",
+		"segundaMayor",
+		"terceraMenor",
+		"cuarta",
+		"quinta",
+		"sextaMenor",
+		"septimaMayor"
+		];
+	
+*/
+/*
+	var escalas = {
+		"minor-harmonic-scale": [
+			"primera",
+			"segundaMayor",
+			"terceraMenor",
+			"cuarta",
+			"quinta",
+			"sextaMenor",
+			"septimaMayor"
+		],
+		"major-scale": [
+			"primera",
+			"segundaMayor",
+			"terceraMayor",
+			"cuarta",
+			"quinta",
+			"sextaMayor",
+			"septimaMayor"
+		]
+	}
+*/
+
+
+	var primera="",
+		segundaMenor="",
+		segundaMayor="",
+		terceraMenor="",
+		terceraMayor="",
+		cuarta="",
+		cuartaAumentada="",
+		quinta="",
+		sextaMenor="",
+		sextaMayor="",
+		septimaMenor="",
+		septimaMayor="";
+
+/*
+	var referencia = {
+		c: [ "c", "cs", "d", "ds", "e", "f", "fs", "g", "gs", "a", "as", "b"],
+		d: [ "d", "ds", "e", "f", "fs", "g", "gs", "a", "as", "b", "c", "cs"]
+	}
+*/
+
+	/* function getReferencia(root) {
+		var base = [ "c", "cs", "d", "ds", "e", "f", "fs", "g", "gs", "a", "as", "b"];
+		/* segu indice uso splice y lo muevo* /
+		return newBase;
+	}*/
+
+
+	var armarEscala = function (root, scale) { 
+		// esto solo:
+
+		//var result = {};
+		/*posiciones.forEach((posicion, indice) => {
+			result[posicion] = referencia[root][indice]; 
+		});*/
+		// es equivalente a :
+		/*for(var i = 0;  i < posiciones.length; i++) {
+			var posicion = posiciones[i];
+			result[posicion] = referencia[root][i];
+		}*/
+
+
+		// es lo mismo que todo esto
+
+
+		if (root == "c") {//escala cromatica empezando en C
+			primera = "c",
+			segundaMenor = "cs",
+			segundaMayor = "d",
+			terceraMenor = "ds",
+			terceraMayor = "e",
+			cuarta = "f",
+			cuartaAumentada = "fs",
+			quinta = "g",
+			sextaMenor = "gs",
+			sextaMayor = "a",
+			septimaMenor = "as",
+			septimaMayor = "b"
+		}
+		else if (root == "cs"){//escala cromatica empezando en CS 
+			primera = "cs",
+			segundaMenor = "d",
+			segundaMayor = "ds",
+			terceraMenor = "e",
+			terceraMayor = "f",
+			cuarta = "fs",
+			cuartaAumentada = "g",
+			quinta = "gs",
+			sextaMenor = "a",
+			sextaMayor = "as",
+			septimaMenor = "b",
+			septimaMayor = "c"
+		} 
+		else if (root == "d"){//escala cromatica empezando en D
+			primera = "d",
+			segundaMenor = "ds",
+			segundaMayor = "e",
+			terceraMenor = "f",
+			terceraMayor = "fs",
+			cuarta = "g",
+			cuartaAumentada = "gs",
+			quinta = "a",
+			sextaMenor = "as",
+			sextaMayor = "b",
+			septimaMenor = "c",
+			septimaMayor = "cs"
+		}
+		else if (root == "ds"){//escala cromatica empezando en DS
+			primera = "ds",
+			segundaMenor = "e",
+			segundaMayor = "f",
+			terceraMenor = "fs",
+			terceraMayor = "g",
+			cuarta = "gs",
+			cuartaAumentada = "a",
+			quinta = "as",
+			sextaMenor = "b",
+			sextaMayor = "c",
+			septimaMenor = "cs",
+			septimaMayor = "d"
+		} 
+		else if (root == "e"){//escala cromatica empezando en E
+			primera = "e",
+			segundaMenor = "f",
+			segundaMayor = "fs",
+			terceraMenor = "g",
+			terceraMayor = "gs",
+			cuarta = "a",
+			cuartaAumentada = "as",
+			quinta = "b",
+			sextaMenor = "c",
+			sextaMayor = "cs",
+			septimaMenor = "d",
+			septimaMayor = "ds"
+		} 
+		else if (root == "f"){//escala cromatica empezando en F
+			primera = "f",
+			segundaMenor = "fs",
+			segundaMayor = "g",
+			terceraMenor = "gs",
+			terceraMayor = "a",
+			cuarta = "as",
+			cuartaAumentada = "b",
+			quinta = "c",
+			sextaMenor = "cs",
+			sextaMayor = "d",
+			septimaMenor = "ds",
+			septimaMayor = "e"
+		} 
+		else if (root == "fs"){//escala cromatica empezando en FS
+			primera = "fs",
+			segundaMenor = "g",
+			segundaMayor = "gs",
+			terceraMenor = "a",
+			terceraMayor = "as",
+			cuarta = "b",
+			cuartaAumentada = "c",
+			quinta = "cs",
+			sextaMenor = "d",
+			sextaMayor = "ds",
+			septimaMenor = "e",
+			septimaMayor = "f"
+		} 
+		else if (root == "g"){//escala cromatica empezando en G
+			primera = "g",
+			segundaMenor = "gs",
+			segundaMayor = "a",
+			terceraMenor = "as",
+			terceraMayor = "b",
+			cuarta = "c",
+			cuartaAumentada = "cs",
+			quinta = "d",
+			sextaMenor = "ds",
+			sextaMayor = "e",
+			septimaMenor = "f",
+			septimaMayor = "fs"
+		} 
+		else if (root == "gs"){//escala cromatica empezando en GS
+			primera = "gs",
+			segundaMenor = "a",
+			segundaMayor = "as",
+			terceraMenor = "b",
+			terceraMayor = "c",
+			cuarta = "cs",
+			cuartaAumentada = "d",
+			quinta = "ds",
+			sextaMenor = "e",
+			sextaMayor = "f",
+			septimaMenor = "fs",
+			septimaMayor = "g"
+		} 
+		else if (root == "a"){//escala cromatica empezando en A
+			primera = "a",
+			segundaMenor = "as",
+			segundaMayor = "b",
+			terceraMenor = "c",
+			terceraMayor = "cs",
+			cuarta = "d",
+			cuartaAumentada = "ds",
+			quinta = "e",
+			sextaMenor = "f",
+			sextaMayor = "fs",
+			septimaMenor = "g",
+			septimaMayor = "gs"
+		} 
+		else if (root == "as"){//escala cromatica empezando en AS
+			primera = "as",
+			segundaMenor = "b",
+			segundaMayor = "c",
+			terceraMenor = "cs",
+			terceraMayor = "d",
+			cuarta = "ds",
+			cuartaAumentada = "e",
+			quinta = "f",
+			sextaMenor = "fs",
+			sextaMayor = "g",
+			septimaMenor = "gs",
+			septimaMayor = "a"
+		} 
+		else if(root == "b"){ //escala cromatica empezando en B
+			primera = "b",
+			segundaMenor = "c",
+			segundaMayor = "cs",
+			terceraMenor = "d",
+			terceraMayor = "ds",
+			cuarta = "e",
+			cuartaAumentada = "f",
+			quinta = "fs",
+			sextaMenor = "g",
+			sextaMayor = "gs",
+			septimaMenor = "a",
+			septimaMayor = "as"
+		}
+
+				// esto :
+		/*var scaleArray = [];
+		for(var i = 0;  i < escalas[scale].length; i++) {
+			var posicion = escalas[scale][i];*/
+			// no hace falta si no onecesitias los nombres de las posiciones: scaleObject[posicion] = result[posicion];
+/*			scaleArray.push(result[posicion]);
+		}*/
+
+var scaleArray = [];
+
+
+		if(scale == "minor-harmonic-scale") {
+
+			// es igual a esto
+
+			minorHarmonicScaleObject.primera = root;
+			minorHarmonicScaleObject.segundaMayor = segundaMayor;
+			minorHarmonicScaleObject.terceraMenor = terceraMenor;
+			minorHarmonicScaleObject.cuarta = cuarta;
+			minorHarmonicScaleObject.quinta = quinta;
+			minorHarmonicScaleObject.sextaMenor = sextaMenor;
+			minorHarmonicScaleObject.septimaMayor = septimaMayor;
+
+			var keys = Object.keys(minorHarmonicScaleObject);
+			var values = Object.values(minorHarmonicScaleObject);
+
+		} else if(scale == "major-scale") {
+			mayorScaleObject.primera = root;
+			mayorScaleObject.segundaMayor = segundaMayor;
+			mayorScaleObject.terceraMayor = terceraMayor;
+			mayorScaleObject.cuarta = cuarta;
+			mayorScaleObject.quinta = quinta;
+			mayorScaleObject.sextaMayor = sextaMayor;
+			mayorScaleObject.septimaMayor = septimaMayor;
+
+			var keys = Object.keys(mayorScaleObject);
+			var values = Object.values(mayorScaleObject);
+
+		} else if(scale == "minor-scale") {
+			minorScaleObject.primera = root;
+			minorScaleObject.segundaMayor = segundaMayor;
+			minorScaleObject.terceraMenor = terceraMenor;
+			minorScaleObject.cuarta = cuarta;
+			minorScaleObject.quinta = quinta;
+			minorScaleObject.sextaMenor = sextaMenor;
+			minorScaleObject.septimaMenor = septimaMenor;
+
+			var keys = Object.keys(minorScaleObject);
+			var values = Object.values(minorScaleObject);
+			
+		} else if(scale == "minor-melodic-scale") {
+			
+		} else if(scale == "minor-dorian-scale") {
+			
+		} else if(scale == "minor-blues-scale") {
+			
+		} else if(scale == "major-blues-scale") {
+			
+		} else if(scale == "mixolydian-scale") {
+			
+		} else if(scale == "lydian-scale") {
+			
+		} else if(scale == "phrygian-scale") {
+			
+		} else if(scale == "augmented-scale") {
+			
+		} else if(scale == "diminished-scale-whole-half") {
+			
+		} else if(scale == "diminished-scale-half-whole") {
+			
+		}
+
+
+			console.log(minorHarmonicScaleObject);
+
+			console.log("keys: " + keys);
+			console.log("values: " + values);
+		
+
+		return {
+			root: root,
+			scale: values
+			//scale: scaleArray
+		};
+
+		//return minorHarmonicScaleObject.primera, minorHarmonicScaleObject.segundaMayor, minorHarmonicScaleObject.terceraMenor, minorHarmonicScaleObject.cuarta, minorHarmonicScaleObject.quinta, minorHarmonicScaleObject.sextaMenor, minorHarmonicScaleObject.septimaMayor; 
+	}
+
+</script>
+</body>
+</html>
